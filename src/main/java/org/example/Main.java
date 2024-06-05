@@ -14,6 +14,8 @@ public class Main {
             Balance.conn = DriverManager.getConnection(Balance.DB_URL,Balance.USER,Balance.PASS);
 
             //trabajar con la base
+            new Minimarket();
+            Interfaz.menuInicial();
 
             //Limpiar el ambiente
             Balance.stmt.close();
@@ -32,7 +34,6 @@ public class Main {
             } catch(SQLException e) {
                 System.out.println("ERROR: " + e.getMessage());
             }
-
             try {
                 if(Balance.conn!=null) {
                     Balance.conn.close();
@@ -43,4 +44,5 @@ public class Main {
         }
         System.out.println("Goodbye!");
     }
+
 }

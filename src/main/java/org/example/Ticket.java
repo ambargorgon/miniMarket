@@ -16,6 +16,8 @@ public class Ticket {
         this.cliente = cliente;
         this.fechaPedido = new Date();
         this.comandaCafe = comandaCafe;
+        calcularPrecioTotal();
+        generarTicket();
     }
 
     //Constructor minimarket
@@ -23,6 +25,27 @@ public class Ticket {
         this.cliente = cliente;
         this.fechaPedido = new Date();
         this.productoMarket = productoMarket;
+        calcularPrecioTotal();
+        generarTicket();
+    }
+
+    public void generarTicket(){
+        System.out.println("========== TICKET DE COMPRA ==========");
+        System.out.println("Cliente: " + cliente.getNombre());
+        System.out.println("Fecha: " + this.fechaPedido);
+        System.out.println("Productos comprados:");
+        for (Producto producto : productoMarket) {
+            System.out.println("- " + producto.getNombre() + " - Precio: $" + producto.getPrecio());
+        }
+        System.out.println("======================================");
+        System.out.println("Precio total: $" + precioTotal);
+        System.out.println("======================================");
+    }
+    private void calcularPrecioTotal() {
+        precioTotal = 0;
+        for (Producto producto : productoMarket) {
+            precioTotal += producto.getPrecio();
+        }
     }
 
     public void sumarTotal(){}; //actualizar precioTotal

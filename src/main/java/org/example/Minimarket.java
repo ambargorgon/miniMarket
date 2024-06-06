@@ -1,10 +1,13 @@
 package org.example;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Random;
+import java.util.Scanner;
 
 public class Minimarket {
     private CafeRestaurante cafe;
-    private ArrayList<Cliente> clientes;
+    private  ArrayList<Cliente> clientes;
     private ArrayList<Producto> productos;
     private ArrayList<Producto> productosComprados;
     private ArrayList<Empleado> empleados;
@@ -13,12 +16,15 @@ public class Minimarket {
         this.clientes = new ArrayList<>();
         this.productos = new ArrayList<>();
         this.empleados = new ArrayList<>();
+        this.productosComprados = new ArrayList<>();
         inicializarArreglos();
     }
 
-    public void venderProducto(Cliente cliente, ArrayList<Producto> productosComprados ){
-        //generar ticket
-        new Ticket(cliente, productosComprados);
+    public void iniciarCompra(){
+        //Envio de cliente al azar y array de productos comprados
+        new Ticket(clientes.get(new Random().nextInt(10)), obtenerProductos());
+        //vaciar arreglo
+        productosComprados.clear();
     }
 
     public void comprarProducto(){} //actualizar balance
@@ -47,6 +53,33 @@ public class Minimarket {
         empleados.add(new Empleado("Pedro García", 12345678, 250000));
         empleados.add(new Empleado("María López", 87654321, 280000));
         empleados.add(new Empleado("Juan Martínez", 13579246, 300000));
+    }
+
+    public ArrayList<Producto> obtenerProductos(){
+        Scanner sc = new Scanner(System.in);
+        Scanner scLine = new Scanner(System.in);
+        boolean continuar = true;
+        while(continuar){
+            continuar = false;
+            System.out.println("PRODUCTOS DISPONIBLES:");
+            for(int i = 0; i <= productos.size()-1; i++){
+                //MUESTRA DE PRODUCTOS
+                System.out.println((i+1)+". "+ productos.get(i).getNombre() +" - $"+ productos.get(i).getPrecio());
+            }
+            System.out.println("Ingrese el numero del producto que desea añadir");
+            int option = sc.nextInt();
+            //AÑADIR PRODUCTO A NUEVO ARRAY
+            productosComprados.add(productos.get(option-1));
+            System.out.println("-----------------------------");
+            System.out.println(productos.get(option-1).getNombre() +" añadido al carrito.");
+            System.out.println("-----------------------------");
+            System.out.println("Desea añadir otro producto? Ingrese s/n");
+            String salir = scLine.nextLine();
+            if(salir.equalsIgnoreCase("s")){
+                continuar = true;
+            }
+        }
+        return productosComprados;
     }
 
     public CafeRestaurante getCafe() {

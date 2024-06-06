@@ -33,14 +33,19 @@ public class Ticket {
         System.out.println("========== TICKET DE COMPRA ==========");
         System.out.println("Cliente: " + cliente.getNombre());
         System.out.println("Fecha: " + this.fechaPedido);
-        System.out.println("Productos comprados:");
+        System.out.println("======================================");
+        System.out.println("Productos:");
         for (Producto producto : productoMarket) {
             System.out.println("- " + producto.getNombre() + " - Precio: $" + producto.getPrecio());
         }
-        System.out.println("======================================");
+        System.out.println("--------------------------------------");
         System.out.println("Precio total: $" + precioTotal);
         System.out.println("======================================");
+
+        //Envio al balance de monto y motivo
+        new Balance(precioTotal,"Venta");
     }
+
     private void calcularPrecioTotal() {
         precioTotal = 0;
         for (Producto producto : productoMarket) {

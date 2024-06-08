@@ -15,23 +15,13 @@ public class Plato {
         return nombre;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
 
     public float getPrecio() {
         return precio;
-    }
-
-    public void setPrecio(float precio) {
-        this.precio = precio;
     }
 
     public int getCantVecesPedido() {
         return cantVecesPedido;
     }
 
-    public void setCantVecesPedido(int cantVecesPedido) {
-        this.cantVecesPedido = cantVecesPedido;
-    }
 }

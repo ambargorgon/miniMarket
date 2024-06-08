@@ -1,19 +1,22 @@
 package org.example;
 
-import java.sql.DriverManager;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.sql.SQLException;
 import java.util.Scanner;
 
+
 public class Main {
+    //Declaracion de Log4j
+    private static final Logger logger = LogManager.getLogger(Main.class);
     public static void main(String[] args) {
         try {
             // Registro del driver jdbc
             Class.forName(Balance.JDBC_DRIVER);
 
             //Abrir conexión
-            System.out.println("Conectándose a la base de datos...");
-//            Balance.conn = DriverManager.getConnection(Balance.DB_URL,Balance.USER,Balance.PASS);
-
+            logger.info("Conectándose a la base de datos...");
             //trabajar con la base
             menuInicial();
 
@@ -32,17 +35,17 @@ public class Main {
                     Balance.stmt.close();
                 }
             } catch(SQLException e) {
-                System.out.println("ERROR: " + e.getMessage());
+                logger.error("ERROR: " + e.getMessage());
             }
             try {
                 if(Balance.conn!=null) {
                     Balance.conn.close();
                 }
             } catch(SQLException e){
-                System.out.println("ERROR: " + e.getMessage());
+                logger.error("ERROR: " + e.getMessage());
             }
         }
-        System.out.println("Goodbye!");
+        logger.info("Adios!");
     }
     public static void menuInicial(){
         Minimarket miniMarket = new Minimarket();
@@ -56,7 +59,8 @@ public class Main {
             System.out.println("2. Registrar pedido Cafe");
             System.out.println("3. Pagar");
             System.out.println("4. Consultar Balance");
-            System.out.println("5. Salir");
+            System.out.println("5. Consultar estadísticas");
+            System.out.println("6. Salir");
             System.out.println("====================");
             int opcion = sc.nextInt();
 
@@ -65,14 +69,18 @@ public class Main {
                     miniMarket.iniciarCompra();
                     break;
                 case 2:
-                    System.out.println("La opción es 2");
+                    miniMarket.getCafe().iniciarCompraCafe();
                     break;
                 case 3:
-                    System.out.println("La opción es 3");
+                    miniMarket.menuPagar();
                     break;
                 case 4:
+                    miniMarket.menuBalance();
                     break;
                 case 5:
+                    miniMarket.consultarEstadisticas();
+                    break;
+                case 6:
                     continuar = false;
                     break;
                 default:

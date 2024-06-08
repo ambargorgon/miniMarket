@@ -15,23 +15,9 @@ public class Empleado {
         return nombre;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public int getDNI() {
-        return DNI;
-    }
-
-    public void setDNI(int DNI) {
-        this.DNI = DNI;
-    }
-
     public float getSueldo() {
         return sueldo;
     }
 
-    public void setSueldo(float sueldo) {
-        this.sueldo = sueldo;
-    }
+    public int getDNI(){return DNI;}
 }

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Ticket {
-    static private Balance balance;
+    private Balance balance = new Balance();
     private Cliente cliente;
     private Date fechaPedido;
     private ArrayList<Plato> comandaCafe;
@@ -16,8 +16,8 @@ public class Ticket {
         this.cliente = cliente;
         this.fechaPedido = new Date();
         this.comandaCafe = comandaCafe;
-        calcularPrecioTotal();
-        generarTicket();
+        calcularPrecioTotal("Cafe");
+        generarTicket("Cafe");
     }
 
     //Constructor minimarket
@@ -25,35 +25,46 @@ public class Ticket {
         this.cliente = cliente;
         this.fechaPedido = new Date();
         this.productoMarket = productoMarket;
-        calcularPrecioTotal();
-        generarTicket();
+        calcularPrecioTotal("Minimarket");
+        generarTicket("Minimarket");
     }
 
-    public void generarTicket(){
+    public void generarTicket(String origen) {
+
         System.out.println("========== TICKET DE COMPRA ==========");
         System.out.println("Cliente: " + cliente.getNombre());
         System.out.println("Fecha: " + this.fechaPedido);
         System.out.println("======================================");
-        System.out.println("Productos:");
-        for (Producto producto : productoMarket) {
-            System.out.println("- " + producto.getNombre() + " - Precio: $" + producto.getPrecio());
+        if (origen.equals("Minimarket")) {
+            System.out.println("Productos:");
+            for (Producto producto : productoMarket) {
+                System.out.println("- " + producto.getNombre() + " - Precio: $" + producto.getPrecio());
+            }
+        } else if (origen.equals("Cafe")) {
+            System.out.println("Platos:");
+            for (Plato plato : comandaCafe) {
+                System.out.println("- " + plato.getNombre() + " - Precio: $" + plato.getPrecio());
+            }
         }
         System.out.println("--------------------------------------");
         System.out.println("Precio total: $" + precioTotal);
         System.out.println("======================================");
 
         //Envio al balance de monto y motivo
-        new Balance(precioTotal,"Venta");
+        balance.subirDatos("Venta", precioTotal);
     }
 
-    private void calcularPrecioTotal() {
+    private void calcularPrecioTotal(String origen) {
         precioTotal = 0;
-        for (Producto producto : productoMarket) {
-            precioTotal += producto.getPrecio();
+        if (origen.equals("Minimarket")) {
+            for (Producto producto : productoMarket) {
+                precioTotal += producto.getPrecio();
+            }
+        } else if (origen.equals("Cafe")) {
+            for (Plato plato : comandaCafe) {
+                precioTotal += plato.getPrecio();
+            }
         }
     }
 
-    public void sumarTotal(){}; //actualizar precioTotal
-    public void actualizarBalance(){};
-    public void sumarGanancia(){};
 }
